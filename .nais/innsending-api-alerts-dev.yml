@@ -21,4 +21,3 @@ spec:
           labels:
             severity: "critical"
             special_type_to_use_in_alertmanager_config: fyllut-sendinn
-            alert_type: custom
