@@ -10,7 +10,7 @@ spec:
     - name: fyllut-sendinn dev alerts
       rules:
         - alert: archiving failed
-          expr: archiving_of_applications_failed_total{namespace="team-soknad", environment="dev-gcp"} > 0
+          expr: sum(innsendingapi_archiving_of_applications_failed_total{namespace="team-soknad", environment="dev-gcp"}) > 0
           for: 1m
           annotations:
             consequence: "_*{{ $labels.container }}*_ has reported archiving of {{ $value }} application(s) have failed."
@@ -19,6 +19,6 @@ spec:
             summary: "Container _*{{ $labels.container }}*_ has reported archiving of {{ $value }} application(s) have failed."
             sla: "Action should be taken as soon as possible"
           labels:
-            severity: "error"
+            severity: "critical"
             special_type_to_use_in_alertmanager_config: fyllut-sendinn
             alert_type: custom
