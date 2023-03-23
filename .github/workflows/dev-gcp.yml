@@ -1,0 +1,22 @@
+name: Deploy alerts to gcp-dev
+on:
+  push:
+    branches:
+      - '*'
+      - '!main'
+    paths:
+      - .github/workflows/gcp-dev.yml
+      - .nais/innsending-api-alerts-dev.yml
+jobs:
+  deploy:
+    name: Deploy to dev
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Deploy to dev
+        uses: nais/deploy/actions/deploy@master
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-gcp
+          RESOURCE: nais/innsending-api-alerts-dev.yml

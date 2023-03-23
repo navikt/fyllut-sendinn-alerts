@@ -1,0 +1,24 @@
+apiVersion: "monitoring.coreos.com/v1"
+kind: PrometheusRule
+metadata:
+  labels:
+    team: fyllut-sendinn
+  name: innsending-api-alerts-dev
+  namespace: fyllut-sendinn
+spec:
+  groups:
+    - name: fyllut-sendinn dev alerts
+      rules:
+        - alert: archiving failed
+          expr: archiving_of_applications_failed_total{namespace="team-soknad", environment="dev-gcp"} > 0
+          for: 1m
+          annotations:
+            consequence: "_*{{ $labels.container }}*_ has reported archiving of {{ $value }} application(s) have failed."
+            action: "Check logs https://logs.adeo.no/app/discover#/?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-2h,to:now))&_a=(columns:!(message,envclass,level,application,host),filters:!(),index:'96e648c0-980a-11e9-830a-e17bbd64b4db',interval:auto,query:(language:lucene,query:'application:soknadsarkiverer%20AND%20cluster:dev-gcp%20AND%20level:Error'),sort:!(!('@timestamp',desc)))"
+            documentation: "https://prometheus.io/docs/prometheus/latest/querying/basics/"
+            summary: "Container _*{{ $labels.container }}*_ has reported archiving of {{ $value }} application(s) have failed."
+            sla: "Action should be taken as soon as possible"
+          labels:
+            severity: "error"
+            special_type_to_use_in_alertmanager_config: fyllut-sendinn
+            alert_type: custom
