@@ -21,3 +21,15 @@ spec:
           labels:
             severity: "critical"
             special_type_to_use_in_alertmanager_config: fyllut-sendinn
+        - alert: number of sent in
+          expr: ceil(sum(increase(innsendingapi_number_of_operations_total{operation="OPPRETT"}[1d])) by (operation)) > 1500
+          for: 1m
+          annotations:
+            consequence: "_*{{ $labels.container }}*_ has reported that the number of created applications {{ $value }} application(s) is above 1500."
+            action: "Check logs https://logs.adeo.no/app/discover#/?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-1d,to:now))&_a=(columns:!(message,envclass,level,application,pod),filters:!(),index:'96e648c0-980a-11e9-830a-e17bbd64b4db',interval:auto,query:(language:lucene,query:'application:innsending-api%20AND%20cluster:prod-gcp%20AND%20(message:%22Opprettet%20s%C3%B8knad%22%20OR%20message:%22Opprettet%20ettersending%22%20OR%20message:%22Soknad%20fra%20fyllut%20persistert%22%20OR%20message:%22Skal%20opprette%20ettersendingssoknad%22)'),sort:!(!('@timestamp',desc)))"
+            documentation: "https://prometheus.io/docs/prometheus/latest/querying/basics/"
+            summary: "Container _*{{ $labels.container }}*_ has reported that the number of created applications {{ $value }} application(s) is above 1500."
+            sla: "Check logs within 3h"
+          labels:
+            severity: "warning"
+            special_type_to_use_in_alertmanager_config: fyllut-sendinn
