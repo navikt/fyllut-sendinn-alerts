@@ -21,7 +21,7 @@ spec:
           labels:
             severity: critical
             namespace: fyllut-sendinn
-            special_type_to_use_in_alertmanager_config: fyllut-sendinn
+            special_type_to_use_in_alertmanager_config: fyllut-sendinn-backend
         - alert: number of sent in
           expr: ceil(sum(increase(innsendingapi_number_of_operations_total{operation="OPPRETT"}[1d])) by (operation)) > 1500
           for: 1m
@@ -33,6 +33,6 @@ spec:
             sla: "Check logs within 3h"
           labels:
             severity: warning
-            special_type_to_use_in_alertmanager_config: fyllut-sendinn
+            special_type_to_use_in_alertmanager_config: fyllut-sendinn-backend
             namespace: fyllut-sendinn
             alert_type: custom

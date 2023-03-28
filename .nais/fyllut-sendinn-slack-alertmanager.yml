@@ -5,6 +5,7 @@ metadata:
   namespace: fyllut-sendinn
   labels:
     alertmanagerConfig: fyllut-sendinn-slack-alertmanager
+    team: fyllut-sendinn
 spec:
   receivers:
     - name: backend-alerts
@@ -12,7 +13,7 @@ spec:
         - apiURL:
             key: apiUrl
             name: slack-webhook
-          channel: 'fyllut-sendinn-alerts'
+          channel: 'team-fyllut-sendinn-alerts'
           iconEmoji: ':test:'
           username: 'Testing Alert'
           sendResolved: true
@@ -56,7 +57,7 @@ spec:
     matchers:
       - name: "special_type_to_use_in_alertmanager_config"
         matchType: "="
-        value: "fyllut-sendinn"
+        value: "fyllut-sendinn-backend"
     groupInterval: 10s
     groupWait: 5s
     receiver: backend-alerts
