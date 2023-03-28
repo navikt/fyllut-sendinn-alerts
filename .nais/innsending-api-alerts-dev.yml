@@ -7,7 +7,7 @@ metadata:
   namespace: fyllut-sendinn
 spec:
   groups:
-    - name: fyllut-sendinn dev alerts
+    - name: fyllut-sendinn-gcp-dev-alerts
       rules:
         - alert: archiving failed
           expr: sum(innsendingapi_archiving_of_applications_failed_total{namespace="team-soknad", environment="dev-gcp"}) > 0
@@ -20,6 +20,7 @@ spec:
             sla: "Action should be taken as soon as possible"
           labels:
             severity: "critical"
+            namespace: team-soknad
             special_type_to_use_in_alertmanager_config: fyllut-sendinn
         - alert: number of sent in
           expr: ceil(sum(increase(innsendingapi_number_of_operations_total{operation="OPPRETT"}[1d])) by (operation)) > 1500
@@ -33,3 +34,4 @@ spec:
           labels:
             severity: "warning"
             special_type_to_use_in_alertmanager_config: fyllut-sendinn
+            namespace: team-soknad
