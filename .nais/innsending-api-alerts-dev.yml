@@ -10,7 +10,7 @@ spec:
     - name: fyllut-sendinn-gcp-dev-alerts
       rules:
         - alert: archiving failed
-          expr: sum(innsendingapi_archiving_of_applications_failed_total{namespace="team-soknad"}) > 0
+          expr: sum(increase(innsendingapi_archiving_of_applications_failed_total{namespace="team-soknad"}[15m])) > 0
           for: 1m
           annotations:
             consequence: "_*{{ $labels.container }}*_ has reported archiving of {{ $value }} application(s) have failed."
