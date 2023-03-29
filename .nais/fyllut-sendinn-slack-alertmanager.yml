@@ -52,7 +52,7 @@ spec:
   route:
     groupInterval: 10s
     groupWait: 5s
-    repeatInterval: 2m
+    repeatInterval: 4h
     groupBy:
       - alertname
     receiver: backend-alerts
