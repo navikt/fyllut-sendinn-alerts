@@ -13,9 +13,9 @@ spec:
         - apiURL:
             key: apiUrl
             name: slack-webhook
-          channel: 'team-fyllut-sendinn-alerts'
-          iconEmoji: ':test:'
-          username: 'Testing Alert'
+          channel: '#team-fyllut-sendinn-alerts'
+          iconEmoji: ':meow_oopskeyboard:'
+          username: 'Alerts backend'
           sendResolved: true
           httpConfig:
             proxyURL: http://webproxy.nais:8088
@@ -52,13 +52,13 @@ spec:
             good
             {{- end }}
   route:
+    groupInterval: 10s
+    groupWait: 5s
+    repeatInterval: 2m
     groupBy:
       - alertname
+    receiver: backend-alerts
     matchers:
       - name: "special_type_to_use_in_alertmanager_config"
         matchType: "="
         value: "fyllut-sendinn-backend"
-    groupInterval: 10s
-    groupWait: 5s
-    receiver: backend-alerts
-    repeatInterval: 2m
