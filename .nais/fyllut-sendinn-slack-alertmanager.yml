@@ -8,6 +8,7 @@ metadata:
     team: fyllut-sendinn
 spec:
   receivers:
+    - name: team-fyllut-sendinn-alerts
     - name: backend-alerts
       slackConfigs:
         - apiURL:
@@ -22,7 +23,8 @@ spec:
           text: >-
             {{ range .Alerts -}}
             *Alert:* {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
-            *Description:* {{ .Annotations.description }}
+            *Consequence:* {{ .Annotations.consequence }}
+            *Actions:* {{ .Annotations.action }}
             *Details:*
             {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
             {{ end }}
@@ -55,8 +57,15 @@ spec:
     repeatInterval: 4h
     groupBy:
       - alertname
-    receiver: backend-alerts
-    matchers:
-      - name: "special_type_to_use_in_alertmanager_config"
-        matchType: "="
-        value: "fyllut-sendinn-backend"
+    receiver: fyllut-sendinn-alerts
+    routes:
+      - receiver: backend-alerts
+        matchers:
+        - name: "special_type_to_use_in_alertmanager_config"
+          matchType: "="
+          value: "fyllut-sendinn-backend"
+      - receiver: frontend-alerts
+        matchers:
+          - name: "special_type_to_use_in_alertmanager_config"
+            matchType: "="
+            value: "fyllut-sendinn-frontend"
