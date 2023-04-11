@@ -57,7 +57,7 @@ spec:
     repeatInterval: 4h
     groupBy:
       - alertname
-    receiver: fyllut-sendinn-alerts
+    receiver: team-fyllut-sendinn-alerts
     routes:
       - receiver: backend-alerts
         matchers:
