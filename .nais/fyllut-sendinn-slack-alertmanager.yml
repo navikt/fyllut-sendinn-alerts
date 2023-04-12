@@ -15,19 +15,17 @@ spec:
             key: apiUrl
             name: slack-webhook
           channel: '#team-fyllut-sendinn-alerts'
-          iconEmoji: ':meow_oopskeyboard:'
+          iconEmoji: ':meow_attention:'
           username: 'Alerts backend'
           sendResolved: true
           title: |-
             [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
+            {{ if eq .Status "firing" }}@here {{ end }}
             *Alert:* {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
             *Consequence:* {{ .Annotations.consequence }}
             *Actions:* {{ .Annotations.action }}
-            *Details:*
-            {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
-            {{ end }}
             {{ end }}
           color: |-
             {{ if eq .Status "firing" -}}
@@ -57,7 +55,7 @@ spec:
             key: apiUrl
             name: slack-webhook
           channel: '#team-fyllut-sendinn-alerts'
-          iconEmoji: ':meow_oopskeyboard:'
+          iconEmoji: ':meow_attention:'
           username: 'Alerts frontend'
           sendResolved: true
           title: |-
