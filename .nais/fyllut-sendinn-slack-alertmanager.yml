@@ -102,11 +102,8 @@ spec:
     receiver: team-fyllut-sendinn-alerts
     routes:
       - receiver: critical
-        matchers: ["special_type_to_use_in_alertmanager_config=fyllut-sendinn-alerts", "severity=critical"]
+        matchers:
+          - [ '{special_type_to_use_in_alertmanager_config="fyllut-sendinn-alerts", severity="critical"}' ]
       - receiver: non-critical
-        matchers: ["special_type_to_use_in_alertmanager_config=fyllut-sendinn-alerts", "severity!=critical"]
-        active_time_intervals:
-          times:
-            - start_time: 06:00
-              end_time: 18:00
-          weekdays: ['monday:friday']
+        matchers:
+          - [ '{special_type_to_use_in_alertmanager_config="fyllut-sendinn-alerts", severity!="critical"}' ]
