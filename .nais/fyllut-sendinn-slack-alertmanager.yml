@@ -19,15 +19,13 @@ spec:
           username: 'Alerts backend'
           sendResolved: true
           title: |-
-            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
+            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] *{{ .Labels.application }}*: {{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
-            *Alert:* {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
-            *Consequence:* {{ .Annotations.consequence }}
-            *Actions:* {{ .Annotations.action }}
-            *Details:*
-            {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
-            {{ end }}
+            {{ if eq .Status "firing" }}<!here>{{ end }}
+            *{{ if .Labels.severity }} - `{{ .Labels.severity }}`:{{ end }}* {{ .Annotations.title }}\n
+            *Consequence:* {{ .Annotations.consequence }} \n
+            *Action:* < {{ .Annotations.action }} | Check log>\n
             {{ end }}
           color: |-
             {{ if eq .Status "firing" -}}
