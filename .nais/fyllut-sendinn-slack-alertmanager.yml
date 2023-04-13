@@ -100,4 +100,18 @@ spec:
     receiver: team-fyllut-sendinn-alerts
     routes:
       - receiver: critical
-        matchers: [ '{special_type_to_use_in_alertmanager_config="fyllut-sendinn-alerts"}' ]
+        matchers:
+          - name: "special_type_to_use_in_alertmanager_config"
+            matchType: "="
+            value: "fyllut-sendinn-alerts"
+          - name: "severity"
+            matchType: "="
+            value: "critical"
+      - receiver: non-critical
+        matchers:
+          - name: "special_type_to_use_in_alertmanager_config"
+            matchType: "="
+            value: "fyllut-sendinn-alerts"
+          - name: "severity"
+            matchType: "!="
+            value: "critical"
