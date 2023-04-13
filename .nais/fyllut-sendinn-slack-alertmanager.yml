@@ -19,13 +19,15 @@ spec:
           username: 'Alerts backend'
           sendResolved: true
           title: |-
-            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] *{{ .Labels.application }}*: {{ .CommonLabels.alertname }}
+            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
-            {{ if eq .Status "firing" }}<!here>{{ end }}
-            *{{ if .Labels.severity }} - `{{ .Labels.severity }}`:{{ end }}* {{ .Annotations.title }}\n
-            *Consequence:* {{ .Annotations.consequence }} \n
-            *Action:* < {{ .Annotations.action }} | Check log>\n
+            *Alert:* {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
+            *Consequence:* {{ .Annotations.consequence }}
+            *Actions:* {{ .Annotations.action }}
+            *Details:*
+            {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
+            {{ end }}
             {{ end }}
           color: |-
             {{ if eq .Status "firing" -}}
@@ -103,3 +105,8 @@ spec:
         matchers: ["special_type_to_use_in_alertmanager_config=fyllut-sendinn-alerts", "severity=critical"]
       - receiver: non-critical
         matchers: ["special_type_to_use_in_alertmanager_config=fyllut-sendinn-alerts", "severity!=critical"]
+        active_time_intervals:
+          times:
+            - start_time: 06:00
+              end_time: 18:00
+          weekdays: ['monday:friday']
