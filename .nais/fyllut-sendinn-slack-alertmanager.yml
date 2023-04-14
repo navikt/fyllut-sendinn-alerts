@@ -59,7 +59,7 @@ spec:
           username: 'Alerts frontend'
           sendResolved: true
           title: |-
-            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] : {{ .Labels.application }} - {{ .CommonLabels.alertname }}
+            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] : {{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
             *Alert:* {{ .Annotations.title }} {{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}\n
