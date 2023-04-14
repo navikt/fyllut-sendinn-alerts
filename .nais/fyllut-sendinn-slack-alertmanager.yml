@@ -22,7 +22,6 @@ spec:
             [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] *{{ .Labels.application }}*: {{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
-            {{ if eq .Status "firing" }}<!here>{{ end }}
             *{{ if .Labels.severity }} - `{{ .Labels.severity }}`:{{ end }}* {{ .Annotations.title }}\n
             *Consequence:* {{ .Annotations.consequence }} \n
             *Action:* < {{ .Annotations.action }} | Check log>\n
@@ -62,7 +61,6 @@ spec:
             [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] *{{ .Labels.application }}*: {{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
-            {{ if eq .Status "firing" }}<!here>{{ end }}
             *Alert:* {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}\n
             *Consequence:* {{ .Annotations.consequence }}\n
             *Actions:* {{ .Annotations.action }}\n
