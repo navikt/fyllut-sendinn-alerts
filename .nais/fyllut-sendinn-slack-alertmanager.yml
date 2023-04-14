@@ -16,17 +16,17 @@ spec:
             name: slack-webhook
           channel: '#team-fyllut-sendinn-alerts'
           iconEmoji: ':meow_attention:'
-          username: 'Alerts backend'
+          username: 'Critical Errors'
           sendResolved: true
           title: |-
-            '[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] : {{ .CommonLabels.alertname }}'
+            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] : {{ .Labels.application }} - {{ .CommonLabels.alertname }}
           text: >-
-            '{{ range .Alerts -}}
-            {{ if eq .Status "firing" }}<!here> | {{ end }}
-            {{ if .Labels.severity }} - *{{ .Labels.severity }}*:{{ end }}* {{ .Annotations.title }}\n
+            {{ range .Alerts -}}
+            {{ if eq .Status "firing" }}<!here> {{ end }}
+            {{ if .Labels.severity }} - *{{ .Labels.severity }}*:{{ end }} {{ .Annotations.title }} \n
             *Consequence:* {{ .Annotations.consequence }} \n
-            *Action:* < {{ .Annotations.action }} | Check log>\n
-            {{- end }}'
+            *Action:* < {{ .Annotations.action }} | Check log> \n
+            {{- end }}
           color: |-
             {{ if eq .Status "firing" -}}
               {{ if eq .CommonLabels.severity "warning" -}}
