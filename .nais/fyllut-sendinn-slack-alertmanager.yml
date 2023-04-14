@@ -59,12 +59,13 @@ spec:
           username: 'Alerts frontend'
           sendResolved: true
           title: |-
-            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
+            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] *{{ .Labels.application }}*: {{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
-            *Alert:* {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
-            *Consequence:* {{ .Annotations.consequence }}
-            *Actions:* {{ .Annotations.action }}
+            {{ if eq .Status "firing" }}<!here>{{ end }}
+            *Alert:* {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}\n
+            *Consequence:* {{ .Annotations.consequence }}\n
+            *Actions:* {{ .Annotations.action }}\n
             *Details:*
             {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
             {{ end }}
@@ -115,3 +116,8 @@ spec:
           - name: "severity"
             matchType: "!="
             value: "critical"
+        active_time_intervals:
+          times:
+            - start_time: 06:00
+              end_time: 18:00
+          weekdays: ['monday:friday']
