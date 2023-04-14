@@ -19,14 +19,14 @@ spec:
           username: 'Critical Errors'
           sendResolved: true
           title: |-
-            '[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] : {{ .Labels.application }} - {{ .CommonLabels.alertname }}'
+            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] : {{ .CommonLabels.alertname }}
           text: >-
-            '{{ range .Alerts -}}
+            {{ range .Alerts -}}
             {{ if eq .Status "firing" }}<!here> {{ end }}
-            {{ if .Labels.severity }} - *{{ .Labels.severity }}*:{{ end }} {{ .Annotations.title }} \n
+            {{ if .Labels.severity }} - *`{{ .Labels.severity }}`*:{{ end }} {{ .Annotations.title }} \n
             *Consequence:* {{ .Annotations.consequence }} \n
-            *Action:* < {{ .Annotations.action }} | Check log> \n
-            {{- end }}'
+            *Action:* < {{ .Annotations.action }} | Check log>
+            {{- end }}
           color: |-
             {{ if eq .Status "firing" -}}
               {{ if eq .CommonLabels.severity "warning" -}}
@@ -59,13 +59,13 @@ spec:
           username: 'Alerts frontend'
           sendResolved: true
           title: |-
-            '[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] : {{ .Labels.application }} - {{ .CommonLabels.alertname }}'
+            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] : {{ .CommonLabels.alertname }}
           text: >-
-            '{{ range .Alerts -}}
+            {{ range .Alerts -}}
             *Alert:* {{ .Annotations.title }} {{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}\n
             *Consequence:* {{ .Annotations.consequence }}\n
             *Actions:* {{ .Annotations.action }}
-            {{- end }}'
+            {{- end }}
           color: |-
             {{ if eq .Status "firing" -}}
               {{ if eq .CommonLabels.severity "warning" -}}
