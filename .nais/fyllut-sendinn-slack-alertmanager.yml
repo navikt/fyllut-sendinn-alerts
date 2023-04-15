@@ -19,7 +19,7 @@ spec:
           username: 'Critical Errors'
           sendResolved: true
           title: |-
-            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] : {{ .Labels.application}} - {{ .CommonLabels.alertname }}
+            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] : {{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
             {{ if eq .Status "firing" }}<!here> {{ end }}
