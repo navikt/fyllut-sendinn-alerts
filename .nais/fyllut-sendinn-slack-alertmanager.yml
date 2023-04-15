@@ -19,12 +19,12 @@ spec:
           username: 'Critical Errors'
           sendResolved: true
           title: |-
-            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] : {{ .CommonLabels.alertname }}
+            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] : {{ .Labels.application}} - {{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
             {{ if eq .Status "firing" }}<!here> {{ end }}
-            {{ if .Labels.severity }} - *`{{ .Labels.severity }}`*:{{ end }} {{ .Annotations.title }} \n
-            *Consequence:* {{ .Annotations.consequence }} \n
+            {{ if .Labels.severity }} - *`{{ .Labels.severity }}`*:{{ end }} {{ .Annotations.title }}{{ "\n" }}
+            *Consequence:* {{ .Annotations.consequence }}{{ "\n" }}
             *Action:* < {{ .Annotations.action }} | Check log>
             {{- end }}
           color: |-
@@ -62,8 +62,8 @@ spec:
             [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] : {{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
-            *Alert:* {{ .Annotations.title }} {{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}\n
-            *Consequence:* {{ .Annotations.consequence }}\n
+            *Alert:* {{ .Annotations.title }} {{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}{{ "\n" }}
+            *Consequence:* {{ .Annotations.consequence }}{{ "\n" }}
             *Actions:* {{ .Annotations.action }}
             {{- end }}
           color: |-
