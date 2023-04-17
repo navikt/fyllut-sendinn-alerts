@@ -25,7 +25,7 @@ spec:
             {{ if eq .Status "firing" }}<!here> {{ end }}
             {{ if .Labels.severity }} - *`{{ .Labels.severity }}`*:{{- end }} {{ .Annotations.title }}{{ "\n" }}
             *Consequence:* {{ .Annotations.consequence }}{{ "\n" }}
-            *Action:* "< {{ .Annotations.action }} | Check log >"
+            *Action:* <{{.Annotations.action}}|Check log>
             {{- end }}
           color: |-
             {{ if eq .Status "firing" -}}
