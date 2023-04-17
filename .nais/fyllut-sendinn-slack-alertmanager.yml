@@ -18,12 +18,15 @@ spec:
           iconEmoji: ':meow_attention:'
           username: 'Critical Errors'
           sendResolved: true
-          title: |-
-            [{{ .Status | toUpper }}]{{ "\n" }} {{ .CommonLabels.alertname }}
+          title: >-
+            {{ range .Alerts }}
+              [{{ .Status | toUpper }}]{{ "\n" }} 
+              [{{ .Labels.service}}]: {{ .CommonLabels.alertname }}
+            {{ end }}
           text: >-
             {{ range .Alerts -}}
               {{ if eq .Status "firing" }}<!here> {{ end }}
-              *Alert:* {{ .Annotations.title }} {{ if .Labels.severity }} - *`{{ .Labels.severity }}`*{{ end }}{{ "\n" }}
+              *Alert:* {{ .Annotations.title }} {{ if .Labels.severity }} - *`{{ .Labels.severity }}`*{{ end }}
               {{ if eq .Status "firing" }}
                 *Consequence:* {{ .Annotations.consequence }}{{ "\n" }}
                 *Action:* <{{.Annotations.action}}|Check log>
@@ -60,12 +63,15 @@ spec:
           iconEmoji: ':meow_attention:'
           username: 'Non-critical Errors'
           sendResolved: true
-          title: |-
-            [{{ .Status | toUpper }}]{{ "\n" }}{{ .CommonLabels.alertname }}
+          title: >-
+            {{ range .Alerts }}
+              [{{ .Status | toUpper }}]{{ "\n" }} 
+              [{{ .Labels.service}}]: {{ .CommonLabels.alertname }}
+            {{ end }}
           text: >-
             {{ range .Alerts -}}
               {{ if eq .Status "firing" }}<!here> {{ end }}
-              *Alert:* {{ .Annotations.title }} {{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}{{ "\n" }}
+              *Alert:* {{ .Annotations.title }} {{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
               {{ if eq .Status "firing" }}
                 *Consequence:* {{ .Annotations.consequence }}{{ "\n" }}
                 *Action:* <{{.Annotations.action}}|Check log>
