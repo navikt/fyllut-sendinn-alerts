@@ -19,13 +19,13 @@ spec:
           username: 'Critical Errors'
           sendResolved: true
           title: |-
-            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{- end }}] : {{ .Labels.service }} - {{ .CommonLabels.alertname }}
+            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{- end }}] : {{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
             {{ if eq .Status "firing" }}<!here> {{ end }}
-            {{ if .Labels.severity }} - *`{{ .Labels.severity }}`*:{{ end }} {{ .Annotations.title }}{{ "\n" }}
+            {{ if .Labels.severity }} - *`{{ .Labels.severity }}`*:{{- end }} {{ .Annotations.title }}{{ "\n" }}
             *Consequence:* {{ .Annotations.consequence }}{{ "\n" }}
-            *Action:* < {{ .Annotations.action }} | Check log>
+            *Action:* "< {{ .Annotations.action }} | Check log >"
             {{- end }}
           color: |-
             {{ if eq .Status "firing" -}}
@@ -56,15 +56,15 @@ spec:
             name: slack-webhook
           channel: '#team-fyllut-sendinn-alerts'
           iconEmoji: ':meow_attention:'
-          username: 'Alerts frontend'
+          username: 'Non-critical Errors'
           sendResolved: true
           title: |-
-            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] : {{ .CommonLabels.alertname }}
+            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{- end }}] : {{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
             *Alert:* {{ .Annotations.title }} {{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}{{ "\n" }}
             *Consequence:* {{ .Annotations.consequence }}{{ "\n" }}
-            *Actions:* {{ .Annotations.action }}
+            *Action:* "< {{ .Annotations.action }} | Check log >"
             {{- end }}
           color: |-
             {{ if eq .Status "firing" -}}
