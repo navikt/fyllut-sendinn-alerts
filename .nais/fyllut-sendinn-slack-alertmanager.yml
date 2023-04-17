@@ -18,14 +18,15 @@ spec:
           iconEmoji: ':meow_attention:'
           username: 'Critical Errors'
           sendResolved: true
-          title: |-
-            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{- end }}] : {{ .CommonLabels.alertname }}
+          title: [{{ .Status | toUpper }}]{{ "\n" }}[{{ .Labels.service}}]: {{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
-            {{ if eq .Status "firing" }}<!here> {{ end }}
-            {{ if .Labels.severity }} - *`{{ .Labels.severity }}`*:{{- end }} {{ .Annotations.title }}{{ "\n" }}
-            *Consequence:* {{ .Annotations.consequence }}{{ "\n" }}
-            *Action:* <{{.Annotations.action}}|Check log>
+              {{ if eq .Status "firing" }}<!here> {{ end }}
+              *Alert:* {{ .Annotations.title }} {{ if .Labels.severity }} - *`{{ .Labels.severity }}`*{{ end }}{{ "\n" }}
+              {{ if eq .Status "firing" }}
+                *Consequence:* {{ .Annotations.consequence }}{{ "\n" }}
+                *Action:* <{{.Annotations.action}}|Check log>
+              {{- end }}
             {{- end }}
           color: |-
             {{ if eq .Status "firing" -}}
@@ -58,13 +59,15 @@ spec:
           iconEmoji: ':meow_attention:'
           username: 'Non-critical Errors'
           sendResolved: true
-          title: |-
-            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{- end }}] : {{ .CommonLabels.alertname }}
+          title: [{{ .Status | toUpper }}]{{ "\n" }}[{{ .Labels.service}}]: {{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
-            *Alert:* {{ .Annotations.title }} {{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}{{ "\n" }}
-            *Consequence:* {{ .Annotations.consequence }}{{ "\n" }}
-            *Action:* <{{.Annotations.action}}|Check log>
+              {{ if eq .Status "firing" }}<!here> {{ end }}
+              *Alert:* {{ .Annotations.title }} {{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}{{ "\n" }}
+              {{ if eq .Status "firing" }}
+                *Consequence:* {{ .Annotations.consequence }}{{ "\n" }}
+                *Action:* <{{.Annotations.action}}|Check log>
+              {{- end }}
             {{- end }}
           color: |-
             {{ if eq .Status "firing" -}}
