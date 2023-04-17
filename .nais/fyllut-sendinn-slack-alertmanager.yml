@@ -19,7 +19,7 @@ spec:
           username: 'Critical Errors'
           sendResolved: true
           title: |-
-            [{{ .Status | toUpper }}]{{ "\n" }}[{{ .Labels.service}}]: {{ .CommonLabels.alertname }}
+            [{{ .Status | toUpper }}]{{ "\n" }} {{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
               {{ if eq .Status "firing" }}<!here> {{ end }}
@@ -61,7 +61,7 @@ spec:
           username: 'Non-critical Errors'
           sendResolved: true
           title: |-
-            [{{ .Status | toUpper }}]{{ "\n" }}[{{ .Labels.service}}]: {{ .CommonLabels.alertname }}
+            [{{ .Status | toUpper }}]{{ "\n" }}{{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
               {{ if eq .Status "firing" }}<!here> {{ end }}
