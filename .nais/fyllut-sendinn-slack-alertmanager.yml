@@ -64,7 +64,7 @@ spec:
             {{ range .Alerts -}}
             *Alert:* {{ .Annotations.title }} {{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}{{ "\n" }}
             *Consequence:* {{ .Annotations.consequence }}{{ "\n" }}
-            *Action:* "< {{ .Annotations.action }} | Check log >"
+            *Action:* <{{.Annotations.action}}|Check log>
             {{- end }}
           color: |-
             {{ if eq .Status "firing" -}}
