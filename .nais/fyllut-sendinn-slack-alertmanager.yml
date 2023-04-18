@@ -19,15 +19,15 @@ spec:
           username: 'Critical Errors'
           sendResolved: true
           title: >-
-            {{ range .Alerts }}
+            {{ range .Alerts -}}
               [{{ .Status | toUpper }}]{{ "\n" }} 
-              [{{ .Labels.service}}]: {{ .CommonLabels.alertname }}
-            {{ end }}
+              [{{ .Labels.service }}]: {{ .CommonLabels.alertname }}
+            {{- end }}
           text: >-
             {{ range .Alerts -}}
               {{ if eq .Status "firing" }}<!here> {{ end }}
               *Alert:* {{ .Annotations.title }} {{ if .Labels.severity }} - *`{{ .Labels.severity }}`*{{ end }}
-              {{ if eq .Status "firing" }}
+              {{ if eq .Status "firing" -}}
                 *Consequence:* {{ .Annotations.consequence }}{{ "\n" }}
                 *Action:* <{{.Annotations.action}}|Check log>
               {{- end }}
@@ -64,15 +64,15 @@ spec:
           username: 'Non-critical Errors'
           sendResolved: true
           title: >-
-            {{ range .Alerts }}
+            {{ range .Alerts -}}
               [{{ .Status | toUpper }}]{{ "\n" }} 
               [{{ .Labels.service}}]: {{ .CommonLabels.alertname }}
-            {{ end }}
+            {{- end }}
           text: >-
             {{ range .Alerts -}}
               {{ if eq .Status "firing" }}<!here> {{ end }}
               *Alert:* {{ .Annotations.title }} {{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
-              {{ if eq .Status "firing" }}
+              {{ if eq .Status "firing" -}}
                 *Consequence:* {{ .Annotations.consequence }}{{ "\n" }}
                 *Action:* <{{.Annotations.action}}|Check log>
               {{- end }}
