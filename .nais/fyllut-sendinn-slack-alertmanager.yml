@@ -15,7 +15,7 @@ spec:
             key: apiUrl
             name: slack-webhook
           channel: '#team-fyllut-sendinn-alerts'
-          iconEmoji: ':meow_attention:'
+          iconEmoji: ':severity_high:'
           username: 'Critical Errors'
           sendResolved: true
           title: |-
@@ -58,7 +58,7 @@ spec:
             key: apiUrl
             name: slack-webhook
           channel: '#team-fyllut-sendinn-alerts'
-          iconEmoji: ':meow_attention:'
+          iconEmoji: ':severity_low:'
           username: 'Non-critical Errors'
           sendResolved: true
           title: |-
@@ -111,6 +111,9 @@ spec:
           - name: "severity"
             matchType: "="
             value: "critical"
+          - name: "cluster"
+            matchTyoe: "="
+            value: "prod-gcp|dev-gcp"
       - receiver: non-critical
         matchers:
           - name: "special_type_to_use_in_alertmanager_config"
@@ -119,3 +122,6 @@ spec:
           - name: "severity"
             matchType: "!="
             value: "critical"
+          - name: "cluster"
+            matchTyoe: "="
+            value: "prod-gcp|dev-gcp"
