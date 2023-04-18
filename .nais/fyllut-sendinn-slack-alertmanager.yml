@@ -18,11 +18,8 @@ spec:
           iconEmoji: ':meow_attention:'
           username: 'Critical Errors'
           sendResolved: true
-          title: >-
-            {{ range .Alerts -}}
-              [{{ .Status | toUpper }}]{{ "\n" }} 
-              []: {{ .CommonLabels.alertname }}
-            {{- end }}
+          title: |-
+              [{{ .Status | toUpper }}] : {{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
               {{ if eq .Status "firing" }}<!here> {{ end }}
@@ -64,11 +61,8 @@ spec:
           iconEmoji: ':meow_attention:'
           username: 'Non-critical Errors'
           sendResolved: true
-          title: >-
-            {{ range .Alerts -}}
-              [{{ .Status | toUpper }}]{{ "\n" }} 
-              []: {{ .CommonLabels.alertname }}
-            {{- end }}
+          title: |-
+            [{{ .Status | toUpper }}] : {{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
               {{ if eq .Status "firing" }}<!here> {{ end }}
