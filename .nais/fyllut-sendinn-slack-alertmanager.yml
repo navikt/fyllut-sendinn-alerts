@@ -111,9 +111,6 @@ spec:
           - name: "severity"
             matchType: "="
             value: "critical"
-          - name: "cluster"
-            matchTyoe: "="
-            value: "prod-gcp|dev-gcp"
       - receiver: non-critical
         matchers:
           - name: "special_type_to_use_in_alertmanager_config"
@@ -122,6 +119,3 @@ spec:
           - name: "severity"
             matchType: "!="
             value: "critical"
-          - name: "cluster"
-            matchTyoe: "="
-            value: "prod-gcp|dev-gcp"
