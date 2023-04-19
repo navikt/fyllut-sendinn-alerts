@@ -65,7 +65,6 @@ spec:
             [{{ .Status | toUpper }}] : {{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
-              {{ if eq .Status "firing" }}<!here> {{ end }}
               *Application:* {{.Labels.service}}{{ "\n" }}
               *Alert:* {{ .Annotations.title }} {{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
               {{ if eq .Status "firing" -}}
