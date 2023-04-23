@@ -15,8 +15,9 @@ on:
           - prod
 
 env:
-  dev_channel: #team-fyllut-sendinn-alerts-dev
-  prod_channel: #team-fyllut-sendinn-alerts
+  dev_channel: '#team-fyllut-sendinn-alerts-dev'
+  prod_channel: '#team-fyllut-sendinn-alerts'
+  resolved: 'true'
 
 jobs:
   dev-deploy:
@@ -32,7 +33,7 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: .nais/fyllut-sendinn-slack-alertmanager.yml
-          VAR: slack_channel=${{env.dev_channel}}
+          VAR: channel=${{env.resolved}}
 
   prod-deploy:
     if: github.event.inputs.environment == 'prod'
@@ -47,4 +48,4 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-gcp
           RESOURCE: .nais/fyllut-sendinn-slack-alertmanager.yml
-          VAR: slack_channel=${{env.prod_channel}}
+          VAR: channel=${{env.resolved}}
