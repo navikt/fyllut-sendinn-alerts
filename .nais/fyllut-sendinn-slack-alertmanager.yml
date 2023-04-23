@@ -14,10 +14,10 @@ spec:
         - apiURL:
             key: apiUrl
             name: slack-webhook
-          channel: '{{slack-channel}}'
           iconEmoji: ':severity-high:'
           username: 'Critical Errors'
           sendResolved: true
+          channel: '{{slack-channel}}'
           title: |-
               [{{ .Status | toUpper }}] : {{ .CommonLabels.alertname }}
           text: >-
@@ -57,10 +57,10 @@ spec:
         - apiURL:
             key: apiUrl
             name: slack-webhook
-          channel: {{ slack-channel }}
           iconEmoji: ':severity-low:'
           username: 'Non-critical Errors'
           sendResolved: true
+          channel: '{{ slack-channel }}'
           title: |-
             [{{ .Status | toUpper }}] : {{ .CommonLabels.alertname }}
           text: >-
