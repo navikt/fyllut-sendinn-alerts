@@ -14,19 +14,19 @@ spec:
         - apiURL:
             key: apiUrl
             name: slack-webhook
+          channel: '#team-fyllut-sendinn-alerts'
           iconEmoji: ':severity-high:'
           username: 'Critical Errors'
           sendResolved: true
-          channel: '#team-fyllut-sendinn-alerts-dev'
           title: |-
-              [{{ .Status | toUpper }}] : {{ .CommonLabels.alertname }}
+            [{{ .Status | toUpper }}] : {{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
               {{ if eq .Status "firing" }}<!here> {{ end }}
-              *Application:* {{.Labels.service}}{{"\n"}}
-              *Alert:* {{ .Annotations.title }} {{- if .Labels.severity -}} - *`{{ .Labels.severity }}`*{{- end -}}
+              *Application:* {{.Labels.service}}{{ "\n" }}
+              *Alert:* {{ .Annotations.title }} {{ if .Labels.severity }} - *`{{ .Labels.severity }}`*{{ end }}
               {{ if eq .Status "firing" -}}
-                *Consequence:* {{ .Annotations.consequence }}{{"\n"}}
+                *Consequence:* {{ .Annotations.consequence }}{{ "\n" }}
                 *Action:* <{{.Annotations.action}}|Check log>
               {{- end }}
             {{- end }}
@@ -57,18 +57,18 @@ spec:
         - apiURL:
             key: apiUrl
             name: slack-webhook
+          channel: '#team-fyllut-sendinn-alerts'
           iconEmoji: ':severity-low:'
           username: 'Non-critical Errors'
           sendResolved: true
-          channel: '#team-fyllut-sendinn-alerts-dev'
           title: |-
             [{{ .Status | toUpper }}] : {{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
-              *Application:* {{.Labels.service}}{{"\n"}}
-              *Alert:* {{ .Annotations.title }} {{- if .Labels.severity -}} - `{{ .Labels.severity }}`{{- end -}}
+              *Application:* {{.Labels.service}}{{ "\n" }}
+              *Alert:* {{ .Annotations.title }} {{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
               {{ if eq .Status "firing" -}}
-                *Consequence:* {{ .Annotations.consequence }}{{"\n"}}
+                *Consequence:* {{ .Annotations.consequence }}{{ "\n" }}
                 *Action:* <{{.Annotations.action}}|Check log>
               {{- end }}
             {{- end }}
