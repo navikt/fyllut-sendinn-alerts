@@ -33,7 +33,7 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: .nais/fyllut-sendinn-slack-alertmanager.yml
-          VAR: channel=${{env.resolved}}
+          VARS: .nais/dev-config.json
 
   prod-deploy:
     if: github.event.inputs.environment == 'prod'
@@ -48,4 +48,4 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-gcp
           RESOURCE: .nais/fyllut-sendinn-slack-alertmanager.yml
-          VAR: channel=${{env.resolved}}
+          VARS: .nais/prod-config.json
