@@ -17,7 +17,7 @@ spec:
           iconEmoji: ':severity-high:'
           username: 'Critical Errors'
           sendResolved: true
-          channel: '#{{slack-channel}}'
+          channel: '#team-fyllut-sendinn-alerts-dev'
           title: |-
               [{{ .Status | toUpper }}] : {{ .CommonLabels.alertname }}
           text: >-
@@ -60,7 +60,7 @@ spec:
           iconEmoji: ':severity-low:'
           username: 'Non-critical Errors'
           sendResolved: true
-          channel: '{{ slack-channel }}'
+          channel: '#team-fyllut-sendinn-alerts-dev'
           title: |-
             [{{ .Status | toUpper }}] : {{ .CommonLabels.alertname }}
           text: >-
