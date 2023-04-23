@@ -17,7 +17,6 @@ spec:
           iconEmoji: ':severity-high:'
           username: 'Critical Errors'
           sendResolved: true
-          channel: '{{slack-channel}}'
           title: |-
               [{{ .Status | toUpper }}] : {{ .CommonLabels.alertname }}
           text: >-
@@ -30,6 +29,7 @@ spec:
                 *Action:* <{{.Annotations.action}}|Check log>
               {{- end }}
             {{- end }}
+          channel: '{{slack-channel}}'
           color: |-
             {{ if eq .Status "firing" -}}
               {{ if eq .CommonLabels.severity "warning" -}}
@@ -60,7 +60,6 @@ spec:
           iconEmoji: ':severity-low:'
           username: 'Non-critical Errors'
           sendResolved: true
-          channel: '{{ slack-channel }}'
           title: |-
             [{{ .Status | toUpper }}] : {{ .CommonLabels.alertname }}
           text: >-
@@ -72,6 +71,7 @@ spec:
                 *Action:* <{{.Annotations.action}}|Check log>
               {{- end }}
             {{- end }}
+          channel: '{{ slack-channel }}'
           color: |-
             {{ if eq .Status "firing" -}}
               {{ if eq .CommonLabels.severity "warning" -}}
