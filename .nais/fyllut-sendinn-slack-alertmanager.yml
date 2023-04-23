@@ -14,7 +14,7 @@ spec:
         - apiURL:
             key: apiUrl
             name: slack-webhook
-          channel: ''{{slack-channel}}'
+          channel: '{{slack-channel}}'
           iconEmoji: ':severity-high:'
           username: 'Critical Errors'
           sendResolved: true
