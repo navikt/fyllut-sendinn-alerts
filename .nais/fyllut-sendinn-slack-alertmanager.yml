@@ -14,7 +14,7 @@ spec:
         - apiURL:
             key: apiUrl
             name: slack-webhook
-          channel: '#team-fyllut-sendinn-alerts'
+          channel: '#team-fyllut-sendinn-alerts-dev'
           iconEmoji: ':severity-high:'
           username: 'Critical Errors'
           sendResolved: true
@@ -57,7 +57,7 @@ spec:
         - apiURL:
             key: apiUrl
             name: slack-webhook
-          channel: '#team-fyllut-sendinn-alerts'
+          channel: '#team-fyllut-sendinn-alerts-dev'
           iconEmoji: ':severity-low:'
           username: 'Non-critical Errors'
           sendResolved: true

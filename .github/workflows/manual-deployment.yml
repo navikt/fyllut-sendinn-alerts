@@ -14,11 +14,6 @@ on:
           - preprod
           - prod
 
-env:
-  dev_channel: '#team-fyllut-sendinn-alerts-dev'
-  prod_channel: '#team-fyllut-sendinn-alerts'
-  resolved: 'true'
-
 jobs:
   dev-deploy:
     if: github.event.inputs.environment == 'preprod'
@@ -48,4 +43,3 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-gcp
           RESOURCE: .nais/fyllut-sendinn-slack-alertmanager.yml
-          VARS: .nais/prod-config.json
