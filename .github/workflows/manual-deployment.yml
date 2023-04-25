@@ -15,16 +15,31 @@ on:
           - prod
 
 jobs:
-  deploy:
+  dev-deploy:
     if: github.event.inputs.environment == 'preprod'
     name: Deploy to dev
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Deploy to dev
+      - name: Deploy alertmanager config to dev
         uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
-          RESOURCE: .nais/innsending-api-alerts-dev.yml
+          RESOURCE: .nais/fyllut-sendinn-slack-alertmanager.yml
+          VARS: .nais/dev-config.json
+
+  prod-deploy:
+    if: github.event.inputs.environment == 'prod'
+    name: Deploy to prod
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Deploy alertmanager config to prod
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: prod-gcp
+          RESOURCE: .nais/fyllut-sendinn-slack-alertmanager.yml

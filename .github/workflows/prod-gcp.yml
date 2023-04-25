@@ -3,12 +3,13 @@ on:
   push:
     branches:
       - '*'
-      - '!main'
+      - 'main'
     paths:
-      - .github/workflows/dev-gcp.yml
+      - .github/workflows/prod-gcp.yml
+      - .nais/fyllut-sendinn-slack-altermanager.yml
 jobs:
   deploy:
-    name: Deploy to dev
+    name: Deploy to prod
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -17,6 +18,6 @@ jobs:
         uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: dev-gcp
+          CLUSTER: prod-gcp
           RESOURCE: .nais/fyllut-sendinn-slack-alertmanager.yml
           VARS: .nais/dev-config.json
