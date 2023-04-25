@@ -25,7 +25,7 @@ spec:
               {{ if eq .Status "firing" }}<!here> {{ end }}
               *Application:* {{.Labels.service}}{{"\n" -}}
               *Alert:* {{ .Annotations.title }} {{ if .Labels.severity -}} - *`{{ .Labels.severity }}`*{{- end }}
-              {{- if eq .Status "firing" }}
+              {{ if eq .Status "firing" -}}
                 *Consequence:* {{ .Annotations.consequence }}{{"\n" -}}
                 *Action:* <{{.Annotations.action}}|Check log>
               {{- end }}
@@ -67,7 +67,7 @@ spec:
             {{ range .Alerts -}}
               *Application:* {{.Labels.service}}{{"\n" -}}
               *Alert:* {{ .Annotations.title }} {{ if .Labels.severity -}} - `{{ .Labels.severity }}`{{- end }}
-              {{- if eq .Status "firing" -}}
+              {{ if eq .Status "firing" -}}
                 *Consequence:* {{ .Annotations.consequence }}{{"\n" -}}
                 *Action:* <{{.Annotations.action}}|Check log>
               {{- end }}
@@ -109,7 +109,7 @@ spec:
             {{ range .Alerts -}}
               *Application:* {{.Labels.service}}{{"\n" -}}
               *Alert:* {{ .Annotations.title }} {{ if .Labels.severity -}} - `{{ .Labels.severity }}`{{- end }}
-              {{- if eq .Status "firing" }}
+              {{ if eq .Status "firing" -}}
                 *Consequence:* {{ .Annotations.consequence }}{{"\n" -}}
                 *Action:* <{{.Annotations.action}}|Check log>
               {{- end }}
