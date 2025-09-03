@@ -23,11 +23,11 @@ spec:
           text: >-
             {{ range .Alerts -}}
               {{ if eq .Status "firing" }}<!here> {{ end }}
-              *Application:* {{.Labels.service}} {{ if .Labels.severity -}} - `{{ .Labels.severity }}`{{- end }}{{"\n" -}}
+              *Application:* {{.Labels.service}} {{ if .Labels.severity -}} `{{ .Labels.severity }}`{{- end }}{{"\n" -}}
               *Alert:* {{ .Annotations.title }}
               {{- if eq .Status "firing" }}
-              *Consequence:* {{ .Annotations.consequence }}{{"\n" -}}
-              *Action:* <{{.Annotations.action}}|Check log>
+                *Consequence:* {{ .Annotations.consequence }}{{"\n" -}}
+                *Action:* <{{.Annotations.action}}|Check log>
               {{- end }}
             {{- end }}
           color: |-
@@ -65,11 +65,11 @@ spec:
             [{{ .Status | toUpper }}] : {{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
-              *Application:* {{.Labels.service}} {{ if .Labels.severity -}} - `{{ .Labels.severity }}`{{- end }}{{"\n" -}}
+              *Application:* {{.Labels.service}} {{ if .Labels.severity -}} `{{ .Labels.severity }}`{{- end }}{{"\n" -}}
               *Alert:* {{ .Annotations.title }}
               {{- if eq .Status "firing" }}
-              *Consequence:* {{ .Annotations.consequence }}{{"\n" -}}
-              *Action:* <{{.Annotations.action}}|Check log>
+                *Consequence:* {{ .Annotations.consequence }}{{"\n" -}}
+                *Action:* <{{.Annotations.action}}|Check log>
               {{- end }}
             {{- end }}
           color: |-
@@ -107,11 +107,11 @@ spec:
             [{{ .Status | toUpper }}] : {{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
-              *Application:* {{.Labels.service}} {{ if .Labels.severity -}} - `{{ .Labels.severity }}`{{- end }}{{"\n" -}}
+              *Application:* {{.Labels.service}} {{ if .Labels.severity -}} `{{ .Labels.severity }}`{{- end }}{{"\n" -}}
               *Alert:* {{ .Annotations.title }}
               {{- if eq .Status "firing" }}
-              *Consequence:* {{ .Annotations.consequence }}{{"\n" -}}
-              *Action:* <{{.Annotations.action}}|Check log>
+                *Consequence:* {{ .Annotations.consequence }}{{"\n" -}}
+                *Action:* <{{.Annotations.action}}|Check log>
               {{- end }}
             {{- end }}
           color: |-
