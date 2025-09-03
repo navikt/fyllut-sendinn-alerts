@@ -139,7 +139,7 @@ spec:
   route:
     groupInterval: 10s
     groupWait: 5s
-    repeatInterval: "{{ if .Labels.repeat_interval }}{{ .Labels.repeat_interval }}{{ else }}4h{{ end }}"
+    repeatInterval: 1h
     groupBy:
       - alertname
     receiver: team-fyllut-sendinn-alerts
