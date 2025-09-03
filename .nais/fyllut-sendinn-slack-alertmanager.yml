@@ -23,11 +23,11 @@ spec:
           text: >-
             {{ range .Alerts -}}
               {{ if eq .Status "firing" }}<!here> {{ end }}
-              *Application:* {{.Labels.service}}{{"\n" -}}
-              *Alert:* {{ .Annotations.title }} {{ if .Labels.severity -}} - *`{{ .Labels.severity }}`*{{- end }}
+              *Application:* {{.Labels.service}} {{ if .Labels.severity -}} - `{{ .Labels.severity }}`{{- end }}{{"\n" -}}
+              *Alert:* {{ .Annotations.title }}
               {{- if eq .Status "firing" }}
-                *Consequence:* {{ .Annotations.consequence }}{{"\n" -}}
-                *Action:* <{{.Annotations.action}}|Check log>
+              *Consequence:* {{ .Annotations.consequence }}{{"\n" -}}
+              *Action:* <{{.Annotations.action}}|Check log>
               {{- end }}
             {{- end }}
           color: |-
@@ -65,11 +65,11 @@ spec:
             [{{ .Status | toUpper }}] : {{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
-              *Application:* {{.Labels.service}}{{"\n" -}}
-              *Alert:* {{ .Annotations.title }} {{ if .Labels.severity -}} - `{{ .Labels.severity }}`{{- end }}
+              *Application:* {{.Labels.service}} {{ if .Labels.severity -}} - `{{ .Labels.severity }}`{{- end }}{{"\n" -}}
+              *Alert:* {{ .Annotations.title }}
               {{- if eq .Status "firing" }}
-                *Consequence:* {{ .Annotations.consequence }}{{"\n" -}}
-                *Action:* <{{.Annotations.action}}|Check log>
+              *Consequence:* {{ .Annotations.consequence }}{{"\n" -}}
+              *Action:* <{{.Annotations.action}}|Check log>
               {{- end }}
             {{- end }}
           color: |-
@@ -107,11 +107,11 @@ spec:
             [{{ .Status | toUpper }}] : {{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
-              *Application:* {{.Labels.service}}{{"\n" -}}
-              *Alert:* {{ .Annotations.title }} {{ if .Labels.severity -}} - `{{ .Labels.severity }}`{{- end }}
+              *Application:* {{.Labels.service}} {{ if .Labels.severity -}} - `{{ .Labels.severity }}`{{- end }}{{"\n" -}}
+              *Alert:* {{ .Annotations.title }}
               {{- if eq .Status "firing" }}
-                *Consequence:* {{ .Annotations.consequence }}{{"\n" -}}
-                *Action:* <{{.Annotations.action}}|Check log>
+              *Consequence:* {{ .Annotations.consequence }}{{"\n" -}}
+              *Action:* <{{.Annotations.action}}|Check log>
               {{- end }}
             {{- end }}
           color: |-
@@ -139,7 +139,7 @@ spec:
   route:
     groupInterval: 10s
     groupWait: 5s
-    repeatInterval: 4h
+    repeatInterval: {{ if .Labels.repeat_interval }}{{ .Labels.repeat_interval }}{{ else }}4h{{ end }}
     groupBy:
       - alertname
     receiver: team-fyllut-sendinn-alerts
