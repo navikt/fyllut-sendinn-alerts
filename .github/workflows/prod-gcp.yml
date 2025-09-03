@@ -21,4 +21,3 @@ jobs:
         env:
           CLUSTER: prod-gcp
           RESOURCE: .nais/fyllut-sendinn-slack-alertmanager.yml
-          VARS: .nais/dev-config.json
