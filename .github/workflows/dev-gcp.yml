@@ -11,9 +11,7 @@ jobs:
     name: Deploy to dev
     runs-on: ubuntu-latest
     permissions:
-      contents: 'read'
       id-token: 'write'
-      packages: 'read'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
