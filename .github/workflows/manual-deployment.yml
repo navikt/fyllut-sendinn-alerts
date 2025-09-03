@@ -19,6 +19,8 @@ jobs:
     if: github.event.inputs.environment == 'preprod'
     name: Deploy to dev
     runs-on: ubuntu-latest
+    permissions:
+      id-token: 'write'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -33,6 +35,8 @@ jobs:
     if: github.event.inputs.environment == 'prod'
     name: Deploy to prod
     runs-on: ubuntu-latest
+    permissions:
+      id-token: 'write'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
