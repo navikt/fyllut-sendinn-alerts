@@ -24,7 +24,7 @@ spec:
             {{ range .Alerts -}}
               {{ if and (eq .Status "firing")
                         (eq .Labels.severity "critical")
-                        (ne .CommonLabels.special_type_to_use_in_alertmanager_config "fyllut-sendinn-alerts-dev") }}<!here> {{ end }}
+                        (eq .CommonLabels.special_type_to_use_in_alertmanager_config "fyllut-sendinn-alerts") }}<!here> {{ end }}
               *Application:* {{.Labels.service}} {{ if .Labels.severity -}} `{{ .Labels.severity }}`{{- end }}{{"\n" -}}
               *Alert:* {{ .Annotations.title }}{{"\n" -}}
               {{- if eq .Status "firing" }}
