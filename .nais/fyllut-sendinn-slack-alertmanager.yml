@@ -23,13 +23,12 @@ spec:
           text: >-
             {{ range .Alerts -}}
               {{ if eq .Status "firing" }}<!here> {{ end }}
-              *Application:* {{.Labels.service}} {{ if .Labels.severity -}} `{{ .Labels.severity }}`{{- end }}
-              *Alert:* {{ .Annotations.title }}
+              *Application:* {{.Labels.service}} {{ if .Labels.severity -}} `{{ .Labels.severity }}`{{- end }}{{"\n" -}}
+              *Alert:* {{ .Annotations.title }}{{"\n" -}}
               {{- if eq .Status "firing" }}
-              {{"\n"}}
-              *Consequence:* {{ .Annotations.consequence }}
-              {{- if .Annotations.summary }}*Summary:* {{ .Annotations.summary }}{{- end }}
-              {{- if .Annotations.sla }}*Sla:* {{ .Annotations.sla }}{{- end }}
+              *Consequence:* {{ .Annotations.consequence }}{{"\n" -}}
+              {{- if .Annotations.summary }}*Summary:* {{ .Annotations.summary }}{{"\n" -}}{{- end }}
+              {{- if .Annotations.sla }}*Sla:* {{ .Annotations.sla }}{{"\n" -}}{{- end }}
               *Action:* <{{.Annotations.action}}|Check log>
               {{- end }}
             {{- end }}
@@ -68,13 +67,12 @@ spec:
             [{{ .Status | toUpper }}] : {{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
-              *Application:* {{.Labels.service}} {{ if .Labels.severity -}} `{{ .Labels.severity }}`{{- end }}
-              *Alert:* {{ .Annotations.title }}
+              *Application:* {{.Labels.service}} {{ if .Labels.severity -}} `{{ .Labels.severity }}`{{- end }}{{"\n" -}}
+              *Alert:* {{ .Annotations.title }}{{"\n" -}}
               {{- if eq .Status "firing" }}
-              {{"\n"}}
-              *Consequence:* {{ .Annotations.consequence }}
-              {{- if .Annotations.summary }}*Summary:* {{ .Annotations.summary }}{{- end }}
-              {{- if .Annotations.sla }}*Sla:* {{ .Annotations.sla }}{{- end }}
+              *Consequence:* {{ .Annotations.consequence }}{{"\n" -}}
+              {{- if .Annotations.summary }}*Summary:* {{ .Annotations.summary }}{{"\n" -}}{{- end }}
+              {{- if .Annotations.sla }}*Sla:* {{ .Annotations.sla }}{{"\n" -}}{{- end }}
               *Action:* <{{.Annotations.action}}|Check log>
               {{- end }}
             {{- end }}
@@ -113,13 +111,12 @@ spec:
             [{{ .Status | toUpper }}] : {{ .CommonLabels.alertname }}
           text: >-
             {{ range .Alerts -}}
-              *Application:* {{.Labels.service}} {{ if .Labels.severity -}} `{{ .Labels.severity }}`{{- end }}
-              *Alert:* {{ .Annotations.title }}
+              *Application:* {{.Labels.service}} {{ if .Labels.severity -}} `{{ .Labels.severity }}`{{- end }}{{"\n" -}}
+              *Alert:* {{ .Annotations.title }}{{"\n" -}}
               {{- if eq .Status "firing" }}
-              {{"\n"}}
-              *Consequence:* {{ .Annotations.consequence }}
-              {{- if .Annotations.summary }}*Summary:* {{ .Annotations.summary }}{{- end }}
-              {{- if .Annotations.sla }}*Sla:* {{ .Annotations.sla }}{{- end }}
+              *Consequence:* {{ .Annotations.consequence }}{{"\n" -}}
+              {{- if .Annotations.summary }}*Summary:* {{ .Annotations.summary }}{{"\n" -}}{{- end }}
+              {{- if .Annotations.sla }}*Sla:* {{ .Annotations.sla }}{{"\n" -}}{{- end }}
               *Action:* <{{.Annotations.action}}|Check log>
               {{- end }}
             {{- end }}
