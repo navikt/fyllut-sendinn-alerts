@@ -11,26 +11,30 @@ spec:
     - name: team-fyllut-sendinn-alerts
     - name: critical
       slackConfigs:
-        - apiURL:
+        - apiURL: &api_url
             key: apiUrl
             name: slack-webhook
-          channel: '#team-fyllut-sendinn-alerts'
-          iconEmoji: ':severity-high:'
+          channel: &prod_channel '#team-fyllut-sendinn-alerts'
+          iconEmoji: ':rotating-light:'
           username: 'Critical Errors'
           sendResolved: true
-          title: |-
+          title: &alert_title |-
             [{{ .Status | toUpper }}] : {{ .CommonLabels.alertname }}
-          text: >-
+          text: &alert_text >-
             {{ range .Alerts -}}
-              {{ if eq .Status "firing" }}<!here> {{ end }}
-              *Application:* {{.Labels.service}}{{"\n" -}}
-              *Alert:* {{ .Annotations.title }} {{ if .Labels.severity -}} - *`{{ .Labels.severity }}`*{{- end }}
+              {{ if and (eq .Status "firing")
+                        (eq .Labels.severity "critical")
+                        (eq .CommonLabels.special_type_to_use_in_alertmanager_config "fyllut-sendinn-alerts") }}<!here> {{ end }}
+              *Application:* {{.Labels.service}} {{ if .Labels.severity -}} `{{ .Labels.severity }}`{{- end }}{{"\n" -}}
+              *Alert:* {{ .Annotations.title }}{{"\n" -}}
               {{- if eq .Status "firing" }}
-                *Consequence:* {{ .Annotations.consequence }}{{"\n" -}}
-                *Action:* <{{.Annotations.action}}|Check log>
+              *Consequence:* {{ .Annotations.consequence }}{{"\n" -}}
+              {{- if .Annotations.summary }}*Summary:* {{ .Annotations.summary }}{{"\n" -}}{{- end }}
+              {{- if .Annotations.sla }}*Sla:* {{ .Annotations.sla }}{{"\n" -}}{{- end }}
+              *Action:* <{{.Annotations.action}}|{{ if .Annotations.actionLinkText }}{{ .Annotations.actionLinkText }}{{ else }}Check log{{ end }}>
               {{- end }}
             {{- end }}
-          color: |-
+          color: &alert_color |-
             {{ if eq .Status "firing" -}}
               {{ if eq .CommonLabels.severity "warning" -}}
                 warning
@@ -52,94 +56,32 @@ spec:
             {{ else -}}
             good
             {{- end }}
+
     - name: non-critical
       slackConfigs:
-        - apiURL:
-            key: apiUrl
-            name: slack-webhook
-          channel: '#team-fyllut-sendinn-alerts'
-          iconEmoji: ':severity-low:'
+        - apiURL: *api_url
+          channel: *prod_channel
+          iconEmoji: ':warning:'
           username: 'Non-critical Errors'
           sendResolved: true
-          title: |-
-            [{{ .Status | toUpper }}] : {{ .CommonLabels.alertname }}
-          text: >-
-            {{ range .Alerts -}}
-              *Application:* {{.Labels.service}}{{"\n" -}}
-              *Alert:* {{ .Annotations.title }} {{ if .Labels.severity -}} - `{{ .Labels.severity }}`{{- end }}
-              {{- if eq .Status "firing" }}
-                *Consequence:* {{ .Annotations.consequence }}{{"\n" -}}
-                *Action:* <{{.Annotations.action}}|Check log>
-              {{- end }}
-            {{- end }}
-          color: |-
-            {{ if eq .Status "firing" -}}
-              {{ if eq .CommonLabels.severity "warning" -}}
-                warning
-              {{- else if eq .CommonLabels.severity "fatal" -}}
-                #611f69
-              {{- else if eq .CommonLabels.severity "critical" -}}
-                #611f69
-              {{- else if eq .CommonLabels.severity "danger" -}}
-                danger
-              {{- else if eq .CommonLabels.severity "error" -}}
-                danger
-              {{- else if eq .CommonLabels.severity "notice" -}}
-                good
-              {{- else if eq .CommonLabels.severity "info" -}}
-                #36c5f0
-              {{- else -}}
-                .CommonLabels.severity
-              {{- end -}}
-            {{ else -}}
-            good
-            {{- end }}
-    - name: non-critical-dev
+          title: *alert_title
+          text: *alert_text
+          color: *alert_color
+
+    - name: all-dev
       slackConfigs:
-        - apiURL:
-            key: apiUrl
-            name: slack-webhook
+        - apiURL: *api_url
           channel: '#team-fyllut-sendinn-alerts-dev'
-          iconEmoji: ':severity-low:'
-          username: 'Non-critical Errors'
+          iconEmoji: ':mag:'
+          username: 'Dev Errors'
           sendResolved: true
-          title: |-
-            [{{ .Status | toUpper }}] : {{ .CommonLabels.alertname }}
-          text: >-
-            {{ range .Alerts -}}
-              *Application:* {{.Labels.service}}{{"\n" -}}
-              *Alert:* {{ .Annotations.title }} {{ if .Labels.severity -}} - `{{ .Labels.severity }}`{{- end }}
-              {{- if eq .Status "firing" }}
-                *Consequence:* {{ .Annotations.consequence }}{{"\n" -}}
-                *Action:* <{{.Annotations.action}}|Check log>
-              {{- end }}
-            {{- end }}
-          color: |-
-            {{ if eq .Status "firing" -}}
-              {{ if eq .CommonLabels.severity "warning" -}}
-                warning
-              {{- else if eq .CommonLabels.severity "fatal" -}}
-                #611f69
-              {{- else if eq .CommonLabels.severity "critical" -}}
-                #611f69
-              {{- else if eq .CommonLabels.severity "danger" -}}
-                danger
-              {{- else if eq .CommonLabels.severity "error" -}}
-                danger
-              {{- else if eq .CommonLabels.severity "notice" -}}
-                good
-              {{- else if eq .CommonLabels.severity "info" -}}
-                #36c5f0
-              {{- else -}}
-                .CommonLabels.severity
-              {{- end -}}
-            {{ else -}}
-            good
-            {{- end }}
+          title: *alert_title
+          text: *alert_text
+          color: *alert_color
   route:
     groupInterval: 10s
     groupWait: 5s
-    repeatInterval: 4h
+    repeatInterval: 1h
     groupBy:
       - alertname
     receiver: team-fyllut-sendinn-alerts
@@ -160,7 +102,7 @@ spec:
           - name: "severity"
             matchType: "!="
             value: "critical"
-      - receiver: non-critical-dev
+      - receiver: all-dev
         matchers:
           - name: "special_type_to_use_in_alertmanager_config"
             matchType: "="

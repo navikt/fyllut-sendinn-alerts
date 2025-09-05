@@ -1,2 +1,2 @@
 # fyllut-sendinn-alerts
-Prosjekt for publisering av alerts 
+Prosjekt for fyllut-sendinn sin egen AlertmanagerConfig. 
