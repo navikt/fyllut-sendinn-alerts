@@ -31,7 +31,7 @@ spec:
               *Consequence:* {{ .Annotations.consequence }}{{"\n" -}}
               {{- if .Annotations.summary }}*Summary:* {{ .Annotations.summary }}{{"\n" -}}{{- end }}
               {{- if .Annotations.sla }}*Sla:* {{ .Annotations.sla }}{{"\n" -}}{{- end }}
-              *Action:* <{{.Annotations.action}}|Check log>
+              *Action:* <{{.Annotations.action}}|{{ if .Annotations.actionLinkText }}{{ .Annotations.actionLinkText }}{{ else }}Check log{{ end }}>
               {{- end }}
             {{- end }}
           color: &alert_color |-
